@@ -2,7 +2,7 @@
   "name": "website_rasp",
   "version": "1.0.0",
   "description": "Website voor Raspberry",
-  "main": "webserver.js",
+  "main": "index.js",
   "scripts": {
     "compile:sass": "node-sass public/sass/main.scss public/css/style.css -w"
   },
@@ -25,7 +25,6 @@
   },
   "comment": {
     "dependecies for raspberry!!!": "",
-    "raspi": "^6.0.1",
-    "raspi-serial": "^6.0.0"
+    "serialport": "^8.0.7"
   }
 }
