@@ -1,0 +1,1 @@
+console.log("test van script.js");

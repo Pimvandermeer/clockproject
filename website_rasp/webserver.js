@@ -1,16 +1,26 @@
-var http = require('http').createServer(handler); //require http server, and create server with function handler()
-var fs = require('fs'); //require filesystem module
+const express = require('express');
+const app = express();
+const path=require('path');
+//const raspi = require('raspi');
+//const Serial = require('raspi-serial').Serial;
 
-http.listen(8080); //listen to port 8080
 
-function handler (req, res) { //create server
-  fs.readFile(__dirname + '/public/index.html', function(err, data) { //read file index.html in public folder
-    if (err) {
-      res.writeHead(404, {'Content-Type': 'text/html'}); //display 404 on error
-      return res.end("404 Not Found");
-    }
-    res.writeHead(200, {'Content-Type': 'text/html'}); //write HTML
-    res.write(data); //write data from index.html
-    return res.end();
-  });
-}
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'public/'));  
+});
+
+app.use(express.static(path.join(__dirname, 'public/')));
+
+app.listen(8080, function () {
+    console.log('Example app listening on port 8080!');
+});
+
+// raspi.init(() => {
+//   var serial = new Serial();
+//   serial.open(() => {
+//     serial.on('data', (data) => {
+//       process.stdout.write(data);
+//     });
+//     serial.write('Hello from raspi-serial');
+//   });
+// });

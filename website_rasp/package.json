@@ -2,7 +2,7 @@
   "name": "website_rasp",
   "version": "1.0.0",
   "description": "Website voor Raspberry",
-  "main": "index.js",
+  "main": "webserver.js",
   "scripts": {
     "compile:sass": "node-sass public/sass/main.scss public/css/style.css -w"
   },
@@ -17,9 +17,15 @@
   },
   "homepage": "https://github.com/Pimvandermeer/clockproject#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "node-sass": "^4.13.1"
   },
   "devDependencies": {
     "sass": "^1.26.3"
+  },
+  "comment": {
+    "dependecies for raspberry!!!": "",
+    "raspi": "^6.0.1",
+    "raspi-serial": "^6.0.0"
   }
 }
