@@ -1,0 +1,22 @@
+{
+  "name": "website_rasp",
+  "version": "1.0.0",
+  "description": "Website voor Raspberry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pimvandermeer/clockproject.git"
+  },
+  "author": "Pim van der Meer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pimvandermeer/clockproject/issues"
+  },
+  "homepage": "https://github.com/Pimvandermeer/clockproject#readme",
+  "dependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
