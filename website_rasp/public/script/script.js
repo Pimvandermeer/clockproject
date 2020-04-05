@@ -1,3 +1,5 @@
+let panelID = [];
+
 const container = document.querySelector(".container");
 
 function makeRows(rows, cols) {
@@ -8,14 +10,38 @@ function makeRows(rows, cols) {
     let cell = document.createElement("div");
     cell.innerText = (c + 1);
     container.appendChild(cell).className = `grid-item ${c + 1}`;
+    panelID[c] = {
+        panelID: `grid-item ${c + 1}`,
+        colorState: 0
+    };
   };
 };
 
 makeRows(5, 4);
 
-const griditem = document.querySelector(".grid-item");
 
-griditem.addEventListener('click', () => {
-    event.preventDefault();
-    console.log(this);
-});
+//Handle Click events
+let interval;
+
+const panels = document.querySelectorAll('.grid-item');
+
+panels.forEach(panel => panel.addEventListener('mousedown', logStartTime));
+panels.forEach(panel => panel.addEventListener('mouseup', logEndTime));
+
+function logStartTime(e) {
+    const panel = this;
+    let color = 0;
+
+    interval = setInterval(function (){
+        color = color + 0.1;
+        console.log(color);
+        panel.style.backgroundColor = `rgba(0,0,0,${color})`;
+    }, 200);
+
+}
+
+function logEndTime() {
+    clearInterval(interval);
+};
+
+

@@ -4,7 +4,8 @@
   "description": "Website voor Raspberry",
   "main": "index.js",
   "scripts": {
-    "compile:sass": "node-sass public/sass/main.scss public/css/style.css -w"
+    "compile:sass": "node-sass public/sass/main.scss public/css/style.css -w",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
     "node-sass": "^4.13.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.2",
     "sass": "^1.26.3"
   },
   "comment": {
