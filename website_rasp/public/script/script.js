@@ -11,8 +11,9 @@ function makeRows(rows, cols) {
     cell.innerText = (c + 1);
     container.appendChild(cell).className = `grid-item ${c + 1}`;
     panelID[c] = {
-        panelID: `grid-item ${c + 1}`,
-        colorState: 0
+        name: `grid-item ${c + 1}`,
+        colorState: 0,
+        clicked: 0
     };
   };
 };
@@ -25,23 +26,47 @@ let interval;
 
 const panels = document.querySelectorAll('.grid-item');
 
-panels.forEach(panel => panel.addEventListener('mousedown', logStartTime));
-panels.forEach(panel => panel.addEventListener('mouseup', logEndTime));
+panels.forEach(panel => panel.addEventListener('mousedown', changePanel));
+panels.forEach(panel => panel.addEventListener('mouseup', stopChangePanel));
 
-function logStartTime(e) {
+function changePanel(e) {
     const panel = this;
-    let color = 0;
+    let panelState;
 
-    interval = setInterval(function (){
-        color = color + 0.1;
-        console.log(color);
-        panel.style.backgroundColor = `rgba(0,0,0,${color})`;
-    }, 200);
+    for(i = 0; i < panelID.length; i++){
+        if (panelID[i].name == this.className) {
+            panelState = panelID[i];
+            if (panelID[i].clicked == 0) {
+                panelID[i].clicked = 1;
+                
+                interval = setInterval(() => {
+                    panelState.colorState = panelState.colorState + 0.05;
+                    panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
+                   
+                    if (panelState.colorState >= 1) {
+                        panelState.colorState = 1;
+                        clearInterval(interval);
+                    };
+                }, 100);
 
+            } else if(panelID[i].clicked == 1) {
+                panelID[i].clicked = 0;
+
+                interval = setInterval(() => {
+                    panelState.colorState = panelState.colorState - 0.05;
+                    panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
+                    
+                    if (panelState.colorState <= 0.01) {
+                        panelState.colorState = 0;
+                        clearInterval(interval);
+                    };
+                }, 100);
+            }
+            panelID[i] = panelState;
+        }
+    }
 }
 
-function logEndTime() {
+function stopChangePanel() {
     clearInterval(interval);
 };
-
-
