@@ -1,3 +1,19 @@
+//Create websocket
+
+var ws = new WebSocket('ws://localhost:40510');
+ws.onopen = function () {
+    console.log('websocket is connected ...')
+ // sending a send event to websocket server
+ws.send('connected')
+}
+
+ws.onmessage = function (ev) {
+    console.log(ev);
+}
+
+
+//Create Panels
+
 let panelID = [];
 
 const container = document.querySelector(".container");

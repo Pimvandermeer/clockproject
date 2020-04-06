@@ -19,7 +19,8 @@
   "homepage": "https://github.com/Pimvandermeer/clockproject#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "ws": "^7.2.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.2",
