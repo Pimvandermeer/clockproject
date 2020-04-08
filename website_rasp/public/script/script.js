@@ -58,7 +58,8 @@ function changePanel(e) {
                 interval = setInterval(() => {
                     panelState.colorState = panelState.colorState + 0.05;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
-                   
+
+                    ws.send(JSON.stringify(panelState)); //send object to server
                     if (panelState.colorState >= 1) {
                         panelState.colorState = 1;
                         clearInterval(interval);

@@ -28,6 +28,6 @@
   },
   "comment": {
     "dependecies for raspberry!!!": "",
-    "serialport": "^8.0.7"
+    "i2c-bus": "^5.1.0"
   }
 }
