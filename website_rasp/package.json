@@ -28,6 +28,6 @@
   },
   "comment": {
     "dependecies for raspberry!!!": "",
-    "i2c-bus": "^5.1.0"
+    "spi-device": "^3.0.1"
   }
 }

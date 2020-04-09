@@ -59,11 +59,12 @@ function changePanel(e) {
                     panelState.colorState = panelState.colorState + 0.05;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
 
-                    ws.send(JSON.stringify(panelState)); //send object to server
+                    
                     if (panelState.colorState >= 1) {
                         panelState.colorState = 1;
                         clearInterval(interval);
                     };
+                    ws.send(JSON.stringify(panelState)); //send object to server
                 }, 100);
 
             } else if(panelID[i].clicked == 1) {
@@ -73,10 +74,12 @@ function changePanel(e) {
                     panelState.colorState = panelState.colorState - 0.05;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
                     
+                    
                     if (panelState.colorState <= 0.01) {
                         panelState.colorState = 0;
                         clearInterval(interval);
                     };
+                    ws.send(JSON.stringify(panelState)); //send object to server
                 }, 100);
             }
             panelID[i] = panelState;

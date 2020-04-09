@@ -1,30 +1,55 @@
 #include<Arduino.h>
-#include <Wire.h>
+#include <SPI.h>
 
+char buf [100];
+volatile byte pos;
+volatile boolean process_it;
 
-// function that executes whenever data is received from master
-// this function is registered as an event, see setup()
-void receiveEvent(int howMany)
+void setup (void)
 {
-  while(1 < Wire.available()) // loop through all but the last
-  {
-    char c = Wire.read(); // receive byte as a character
-    Serial.print(c);         // print the character
-  }
-  int x = Wire.read();    // receive byte as an integer
-  Serial.println(x);         // print the integer
-}
+  Serial.begin (115200);   // debugging
+
+  // have to send on master in, *slave out*
+  pinMode(MISO, OUTPUT);
+  // SPI.setDataMode (SPI_MODE0);
+  // turn on SPI in slave mode
+  SPCR |= _BV(SPE);
+  
+  // get ready for an interrupt 
+  pos = 0;   // buffer empty
+  process_it = false;
+
+  // now turn on interrupts
+  SPI.attachInterrupt();
+
+}  // end of setup
 
 
-void setup()
+// SPI interrupt routine
+ISR (SPI_STC_vect)
 {
-  Wire.begin(4);                // join i2c bus with address #4
-  Wire.onReceive(receiveEvent); // register event
-  Serial.begin(9600);           // start serial for output
-}
+byte c = SPDR;  // grab byte from SPI Data Register
+  
+  // add to buffer if room
+  if (pos < (sizeof (buf) - 1))
+    buf [pos++] = c;
+    //process_it = true;
+    
+  // example: newline means time to process buffer
+  if (c == '\n')
+    process_it = true;
+      
+}  // end of interrupt routine SPI_STC_vect
 
-void loop()
+// main loop - wait for flag set in interrupt routine
+void loop (void)
 {
-  delay(100);
-}
-
+  if (process_it)
+    {
+    buf [pos] = 0;  
+    Serial.println (buf);
+    pos = 0;
+    process_it = false;
+    }  // end of flag set
+    
+}  // end of loop

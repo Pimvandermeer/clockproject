@@ -2,7 +2,7 @@
 //import webserver, { parsers } from "./app/webserver.js";
 var webserver = require('./app/webserver.js');
 var serial = require('./app/serial.js');
-var i2c = require('./app/i2c.js');
+var spi = require('./app/spi.js');
 // //serial();
-// i2c();
+// spi();
 webserver();

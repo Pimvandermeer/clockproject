@@ -21,10 +21,10 @@ module.exports = () => {
       console.log('received: %s', message)
     })
 
-    setInterval(
-      () => ws.send(`${new Date()}`),
-      1000
-    )
+    // setInterval(       TO check if there is a connection
+    //   () => ws.send(`${new Date()}`),
+    //   1000
+    // )
   })
 
 
