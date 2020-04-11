@@ -1,4 +1,5 @@
 //Create websocket
+//LET OP OP DE RASPBERRY MOET SOCKTET NAAR EIGEN IP VERWIJZEN IPV LOCALHOST
 
 var ws = new WebSocket('ws://localhost:40510');
 ws.onopen = function () {
@@ -56,7 +57,7 @@ function changePanel(e) {
                 panelID[i].clicked = 1;
                 
                 interval = setInterval(() => {
-                    panelState.colorState = panelState.colorState + 0.05;
+                    panelState.colorState = panelState.colorState + 0.1;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
 
                     
@@ -65,13 +66,13 @@ function changePanel(e) {
                         clearInterval(interval);
                     };
                     ws.send(JSON.stringify(panelState)); //send object to server
-                }, 100);
+                }, 200);
 
             } else if(panelID[i].clicked == 1) {
                 panelID[i].clicked = 0;
 
                 interval = setInterval(() => {
-                    panelState.colorState = panelState.colorState - 0.05;
+                    panelState.colorState = panelState.colorState - 0.1;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
                     
                     
@@ -80,7 +81,7 @@ function changePanel(e) {
                         clearInterval(interval);
                     };
                     ws.send(JSON.stringify(panelState)); //send object to server
-                }, 100);
+                }, 200);
             }
             panelID[i] = panelState;
         }

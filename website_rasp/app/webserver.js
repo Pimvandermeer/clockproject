@@ -14,18 +14,18 @@ module.exports = () => {
       console.log('Example app listening on port 8080!');
   });
 
-  var WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 40510})
-  wss.on('connection', function (ws) {
-    ws.on('message', function (message) {
-      console.log('received: %s', message)
-    })
+  // var WebSocketServer = require('ws').Server,
+  // wss = new WebSocketServer({port: 40510})
+  // wss.on('connection', function (ws) {
+  //   ws.on('message', function (message) {
+  //     console.log('received: %s', message)
+  //   })
 
     // setInterval(       TO check if there is a connection
     //   () => ws.send(`${new Date()}`),
     //   1000
     // )
-  })
+//  })
 
 
 
