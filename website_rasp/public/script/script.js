@@ -1,11 +1,12 @@
 //Create websocket
-//LET OP OP DE RASPBERRY MOET SOCKTET NAAR EIGEN IP VERWIJZEN IPV LOCALHOST
+//LET OP OP DE RASPBERRY MOET SOCKET NAAR EIGEN IP VERWIJZEN IPV LOCALHOST
 
 var ws = new WebSocket('ws://localhost:40510');
 ws.onopen = function () {
     console.log('websocket is connected ...')
  // sending a send event to websocket server
-ws.send('connected')
+
+ //ws.send('connected')
 }
 
 ws.onmessage = function (ev) {
@@ -57,7 +58,7 @@ function changePanel(e) {
                 panelID[i].clicked = 1;
                 
                 interval = setInterval(() => {
-                    panelState.colorState = panelState.colorState + 0.1;
+                    panelState.colorState = panelState.colorState + 0.2;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
 
                     
@@ -72,7 +73,7 @@ function changePanel(e) {
                 panelID[i].clicked = 0;
 
                 interval = setInterval(() => {
-                    panelState.colorState = panelState.colorState - 0.1;
+                    panelState.colorState = panelState.colorState - 0.2;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
                     
                     

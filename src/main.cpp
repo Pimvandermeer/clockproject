@@ -1,9 +1,20 @@
 #include<Arduino.h>
 #include <SPI.h>
+#include <AccelStepper.h>
 
 byte buf [100];
 volatile byte pos;
 volatile boolean process_it;
+
+// Define pin connections
+const int dirPin = 2;
+const int stepPin = 3;
+
+// Define motor interface type
+#define motorInterfaceType 1
+
+// Creates an instance
+AccelStepper myStepper(motorInterfaceType, stepPin, dirPin);
 
 void setup (void) {
   Serial.begin (115200);   // debugging
@@ -12,13 +23,20 @@ void setup (void) {
   pinMode(MISO, OUTPUT);  
   // turn on SPI in slave mode
   SPCR |= _BV(SPE);
-  
-  // get ready for an interrupt 
+    // get ready for an interrupt 
   pos = 0;   // buffer empty
   process_it = false;
-
   // now turn on interrupts
   SPI.attachInterrupt();
+
+  //Set stepper motor
+  myStepper.setMaxSpeed(4000);
+  myStepper.setAcceleration(8000);
+  myStepper.setSpeed(100);
+
+    // set motor position to 0
+  myStepper.setCurrentPosition(0);
+
 };
 
 // SPI interrupt routine
@@ -28,6 +46,7 @@ ISR (SPI_STC_vect) {
   // add to buffer if room
   if (pos < (sizeof (buf) - 1))
     buf [pos++] = c; 
+    //Serial.println("recieved something");
     
   // example: newline means time to process buffer
   if (c == 0xff)
@@ -44,18 +63,30 @@ void array_to_string(byte array[], unsigned int len, char buffer[]) {
     buffer[len*2] = '\0';
 }
 
+void setMotorPosition(int position) {
+ // int position = position;
+  int data = map(position, 0, 10, 0, 50);
+  Serial.println(data);
+  myStepper.runToNewPosition(data);
+}
+
 
 // main loop - wait for flag set in interrupt routine
 void loop (void) {
+
+
   if (process_it) {
     buf [pos] = 0; 
 
+    setMotorPosition(buf[0]);  
+
     //take buf and set to string
     char str[32] = "";
-    array_to_string(buf, 8, str);
-    Serial.println (str);  
-
+    array_to_string(buf, 2, str);
+    
     pos = 0;
     process_it = false;
     };    
+
+
 }  
