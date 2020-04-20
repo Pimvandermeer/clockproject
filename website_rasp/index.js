@@ -7,7 +7,7 @@ var serial = require('./app/serial.js');
 //spi();
 webserver();
 
-const spi = require('spi-device');
+//const spi = require('spi-device');
 
 var WebSocketServer = require('ws').Server,
 wss = new WebSocketServer({port: 40510})
@@ -15,8 +15,8 @@ wss.on('connection', function (ws) {
   ws.on('message', function (message) {
     let jsonObject = JSON.parse(message);
     let spiObject = jsonObject.colorState;
-    sendSPIObject(spiObject);
-   // console.log(spiObject);
+ //   sendSPIObject(spiObject);   ENABLE FOR RASPBERRY
+    console.log(spiObject);
   });
 });
 

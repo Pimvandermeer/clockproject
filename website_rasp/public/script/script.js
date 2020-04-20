@@ -17,6 +17,19 @@ ws.onmessage = function (ev) {
 //Create Panels
 
 let panelID = [];
+const rows = 5;
+const cols = 4;
+
+function addColsClass(cell, c) {
+    let column = c%cols;
+    cell.classList.add(`column_${column}`)
+};
+
+function addRowsClass(cell, c) {
+    let row = Math.floor(c / cols);
+    cell.classList.add(`row_${row}`);
+};
+
 
 const container = document.querySelector(".container");
 
@@ -28,6 +41,9 @@ function makeRows(rows, cols) {
     let cell = document.createElement("div");
     cell.innerText = (c + 1);
     container.appendChild(cell).className = `grid-item ${c + 1}`;
+    addColsClass(cell, c);
+    addRowsClass(cell, c);
+
     panelID[c] = {
         name: `grid-item ${c + 1}`,
         colorState: 0,
@@ -36,7 +52,9 @@ function makeRows(rows, cols) {
   };
 };
 
-makeRows(5, 4);
+makeRows(rows, cols);
+
+
 
 
 //Handle Click events
