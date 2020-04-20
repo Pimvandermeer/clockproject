@@ -1,3 +1,8 @@
+//import * as from './overlay.js';
+//import test,{panelID} from './overlay.js';
+
+
+
 //Create websocket
 //LET OP OP DE RASPBERRY MOET SOCKET NAAR EIGEN IP VERWIJZEN IPV LOCALHOST
 
@@ -14,8 +19,7 @@ ws.onmessage = function (ev) {
 }
 
 
-//Create Panels
-
+//create Panels
 let panelID = [];
 const rows = 5;
 const cols = 4;
@@ -30,55 +34,54 @@ function addRowsClass(cell, c) {
     cell.classList.add(`row_${row}`);
 };
 
-
 const container = document.querySelector(".container");
 
 function makeRows(rows, cols) {
-  container.style.setProperty('--grid-rows', rows);
-  container.style.setProperty('--grid-cols', cols);
+    container.style.setProperty('--grid-rows', rows);
+    container.style.setProperty('--grid-cols', cols);
 
-  for (c = 0; c < (rows * cols); c++) {
-    let cell = document.createElement("div");
-    cell.innerText = (c + 1);
-    container.appendChild(cell).className = `grid-item ${c + 1}`;
-    addColsClass(cell, c);
-    addRowsClass(cell, c);
+    for (let c = 0; c < (rows * cols); c++) {
+        let cell = document.createElement("div");
+        cell.innerText = (c + 1);
+        container.appendChild(cell).className = `grid-item ${c + 1}`;
+        container.appendChild(cell).setAttribute("id", `grid-item ${c + 1}`);
+        addColsClass(cell, c);
+        addRowsClass(cell, c);
 
-    panelID[c] = {
-        name: `grid-item ${c + 1}`,
-        colorState: 0,
-        clicked: 0
+        panelID[c] = {
+            name: `grid-item ${c + 1}`,
+            colorState: 0,
+            clicked: 0
+        };
+
     };
-  };
 };
 
 makeRows(rows, cols);
 
 
-
-
 //Handle Click events
 let interval;
 
-const panels = document.querySelectorAll('.grid-item');
+const panels = document.getElementsByClassName("grid-item");
 
-panels.forEach(panel => panel.addEventListener('mousedown', changePanel));
-panels.forEach(panel => panel.addEventListener('mouseup', stopChangePanel));
+Array.from(panels).forEach(panel => panel.addEventListener('mousedown', changePanel));
+Array.from(panels).forEach(panel => panel.addEventListener('mouseup', stopChangePanel));
 
 function changePanel(e) {
     const panel = this;
     let panelState;
 
-    for(i = 0; i < panelID.length; i++){
-        if (panelID[i].name == this.className) {
+    for(let i = 0; i < panelID.length; i++){
+        if (panelID[i].name === this.id) {
             panelState = panelID[i];
+            
             if (panelID[i].clicked == 0) {
                 panelID[i].clicked = 1;
                 
                 interval = setInterval(() => {
                     panelState.colorState = panelState.colorState + 0.2;
                     panel.style.backgroundColor = `rgba(0,0,0,${panelState.colorState})`;
-
                     
                     if (panelState.colorState >= 1) {
                         panelState.colorState = 1;

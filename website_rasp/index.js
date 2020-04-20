@@ -14,7 +14,8 @@ wss = new WebSocketServer({port: 40510})
 wss.on('connection', function (ws) {
   ws.on('message', function (message) {
     let jsonObject = JSON.parse(message);
-    let spiObject = jsonObject.colorState;
+    let spiObject = jsonObject;
+    //let spiObject = jsonObject.colorState;
  //   sendSPIObject(spiObject);   ENABLE FOR RASPBERRY
     console.log(spiObject);
   });

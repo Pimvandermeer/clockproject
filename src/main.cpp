@@ -64,7 +64,6 @@ void array_to_string(byte array[], unsigned int len, char buffer[]) {
 }
 
 void setMotorPosition(int position) {
- // int position = position;
   int data = map(position, 0, 10, 0, 50);
   Serial.println(data);
   myStepper.runToNewPosition(data);
@@ -87,6 +86,4 @@ void loop (void) {
     pos = 0;
     process_it = false;
     };    
-
-
 }  
