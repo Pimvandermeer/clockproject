@@ -1,8 +1,6 @@
 //import * as from './overlay.js';
 //import test,{panelID} from './overlay.js';
 
-
-
 //Create websocket
 //LET OP OP DE RASPBERRY MOET SOCKET NAAR EIGEN IP VERWIJZEN IPV LOCALHOST
 
@@ -21,6 +19,7 @@ ws.onmessage = function (ev) {
 
 //create Panels
 let panelID = [];
+
 const rows = 5;
 const cols = 4;
 
@@ -51,9 +50,11 @@ function makeRows(rows, cols) {
         panelID[c] = {
             name: `grid-item ${c + 1}`,
             colorState: 0,
-            clicked: 0
+            clicked: 0,
+            column: c%cols,
+            row: Math.floor(c/cols),
+            item: cell
         };
-
     };
 };
 
@@ -113,3 +114,43 @@ function changePanel(e) {
 function stopChangePanel() {
     clearInterval(interval);
 };
+
+function loopDiagonalGrid() {
+    for (let k = 0; k<= rows-1; k++) {
+        let i = k;
+        let j = 0;
+        while (i>=0) { 
+            if (j == 0) {
+                
+           };
+            diagonalAnimation(i,j);
+            i = i-1;
+            j = j+1;
+        };
+    };
+    for (let k = 1; k<= rows-1; k++){
+        let i = cols -1;
+        let j = k;
+        while (j <= rows-1) {
+            if (i == 3) {
+               // setTimeout(diagonalAnimation(i,j),300);
+            }
+            diagonalAnimation(i,j);
+            i = i-1;
+            j = j+1;
+        }
+    }
+}
+
+function diagonalAnimation(colNumber, rowNumber) {
+   // setTimeout(() => { 
+       for (let i = 0; i < panelID.length; i++) {
+                            if (panelID[i].column == colNumber && panelID[i].row ==rowNumber) {
+                                console.log(panelID[i]);
+                                panelID[i].item.style.backgroundColor = `rgba(0,0,0,.5)`
+                            };
+                        }
+       //             }, colNumber * 1000);
+}
+
+loopDiagonalGrid();
