@@ -14,16 +14,20 @@ wss = new WebSocketServer({port: 40510})
 wss.on('connection', function (ws) {
   ws.on('message', function (message) {
     let jsonObject = JSON.parse(message);
-    let spiObject = jsonObject;
-    //let spiObject = jsonObject.colorState;
- //   sendSPIObject(spiObject);   ENABLE FOR RASPBERRY
-    console.log(spiObject);
+    let spiMotor = jsonObject.motor;
+    let spiObjectState = jsonObject.colorState;
+
+    sendSPIObject(spiMotor, spiObjectState);   //ENABLE FOR RASPBERRY
+
+   // console.log(spiMotor, spiObjectState);
+
   });
 });
 
-function sendSPIObject (data) {
+function sendSPIObject (spiMotor, spiMotorState) {
   let sendBytesArray = [];
-  let editData = map_range(data, 0, 1, 0, 10)
+  let editData = map_range(spiMotorState, 0, 1, 0, 10);
+  sendBytesArray.push(spiMotor);
   sendBytesArray.push(editData);
   sendBytesArray.push(0xFF);
   console.log(sendBytesArray);
@@ -34,7 +38,7 @@ function sendSPIObject (data) {
   const message = [{
     sendBuffer: Buffer.from(sendBytesArray), // Sent to read channel 5
     //receiveBuffer: Buffer.alloc(3),              // Raw data read from channel 5
-    byteLength: 2,
+    byteLength: 3,
     speedHz: 20000 // Use a low bus speed to get a good reading from the TMP36
   }];
 

@@ -49,6 +49,7 @@ function makeRows(rows, cols) {
 
         panelID[c] = {
             name: `grid-item ${c + 1}`,
+            motor: c,
             colorState: 0,
             clicked: 0,
             column: c%cols,
@@ -107,9 +108,9 @@ function changePanel(e) {
                 }, 200);
             }
             panelID[i] = panelState;
-        }
-    }
-}
+        };
+    };
+};
 
 function stopChangePanel() {
     clearInterval(interval);
@@ -132,7 +133,7 @@ function animationGrid(colNumber, rowNumber, times) {
                 };
             };
         })
-    }, times * 300);
+    }, times * 600);
 };
 
 function loopVerticalGrid() {
@@ -142,9 +143,9 @@ function loopVerticalGrid() {
         while (j < rows) {            
             animationGrid(i,j,k);
             j++;
-        }
-    }
-}
+        };
+    };
+};
 
 function loopHorizontalGrid() {
     for (let k=0; k<=cols; k++) {
@@ -154,9 +155,9 @@ function loopHorizontalGrid() {
             console.log(i,j);
             animationGrid(j, i, k);  //inverted j & i to assign rows instead of cols
             j++;
-        }
-    }
-}
+        };
+    };
+};
 
 function loopDiagonalGrid() {
     for (let k =0; k<= rows-1; k++) {
@@ -181,7 +182,6 @@ function loopDiagonalGrid() {
 
 
 
-//setInterval(loopDiagonalGrid, 2000);
+//setInterval(loopDiagonalGrid, 3000);
 //setInterval(loopVerticalGrid, 2000);
-
 //setInterval(loopHorizontalGrid, 2000);

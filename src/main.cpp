@@ -73,15 +73,15 @@ void setMotorPosition(int position) {
 // main loop - wait for flag set in interrupt routine
 void loop (void) {
 
-
   if (process_it) {
     buf [pos] = 0; 
 
-    setMotorPosition(buf[0]);  
+    setMotorPosition(buf[1]);  
+    Serial.println(buf[0]);
 
     //take buf and set to string
     char str[32] = "";
-    array_to_string(buf, 2, str);
+    array_to_string(buf, 3, str);
     
     pos = 0;
     process_it = false;
