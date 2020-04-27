@@ -6,6 +6,28 @@ byte buf [100];
 volatile byte pos;
 volatile boolean process_it;
 
+class motor {
+  public:
+  byte _dirPin;
+  byte _stepPin;
+
+  void setMotor(byte stepPin, byte dirPin);
+  void createMotorInstance();
+  
+  private:
+    /* data */
+};
+
+void motor::setMotor (byte stepPin, byte dirPin) {
+  _dirPin = dirPin;
+  _stepPin = stepPin;
+}
+
+motor motor1;
+
+
+
+
 // Define pin connections
 const int dirPin = 2;
 const int stepPin = 3;

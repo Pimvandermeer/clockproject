@@ -5,14 +5,17 @@ import * as overlay from './overlay.js';
 var ws = new WebSocket('ws://localhost:40510');
 ws.onopen = function () {
     console.log('websocket is connected ...')
- // sending a send event to websocket server
-
- //ws.send('connected')
-}
+};
 
 ws.onmessage = function (ev) {
     console.log(ev);
-}
+};
+
+function websocketSend(element) {
+    let item = JSON.stringify(element);
+    ws.send(item);
+};
+
 
 //Handle Click events
 let interval;
@@ -41,7 +44,7 @@ function changePanel(e) {
                         panelState.colorState = 1;
                         clearInterval(interval);
                     };
-                    ws.send(JSON.stringify(panelState)); //send object to server
+                    websocketSend(panelState); //send object to server
                 }, 200);
 
             } else if(overlay.panelID[i].clicked == 1) {
@@ -56,7 +59,7 @@ function changePanel(e) {
                         panelState.colorState = 0;
                         clearInterval(interval);
                     };
-                    ws.send(JSON.stringify(panelState)); //send object to server
+                    websocketSend(panelState); //send object to server
                 }, 200);
             }
             overlay.panelID[i] = panelState;
@@ -77,11 +80,11 @@ function animationGrid(colNumber, rowNumber, times) {
                 if (element.colorState == 0) {
                     element.item.style.backgroundColor = `rgba(0,0,0,.5)`;
                     element.colorState = 1;
-                    ws.send(JSON.stringify(element)) //SEND OBJECT to server
+                    websocketSend(element); 
                 } else if (element.colorState == 1) {
                     element.item.style.backgroundColor = `rgba(0,0,0,.0)`;
                     element.colorState = 0;
-                    ws.send(JSON.stringify(element)) //SEND OBJECT to server
+                    websocketSend(element); 
                 };
             };
         })
@@ -100,7 +103,7 @@ function randomShuffleAnimationGrid (times) {
 
                 element.item.style.backgroundColor=`rgba(0,0,0,${randomNumber})`;
                 element.colorState = randomNumber;
-                ws.send(JSON.stringify(element));
+                websocketSend(element);;
             }, (randomNumber * 10) * 1000);
         });
     };
