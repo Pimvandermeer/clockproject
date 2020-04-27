@@ -17,9 +17,9 @@ wss.on('connection', function (ws) {
     let spiMotor = jsonObject.motor;
     let spiObjectState = jsonObject.colorState;
 
-    sendSPIObject(spiMotor, spiObjectState);   //ENABLE FOR RASPBERRY
+   // sendSPIObject(spiMotor, spiObjectState);   //ENABLE FOR RASPBERRY
 
-   // console.log(spiMotor, spiObjectState);
+    console.log(spiMotor, spiObjectState);
 
   });
 });

@@ -16,6 +16,36 @@ const int stepPin = 3;
 // Creates an instance
 AccelStepper myStepper(motorInterfaceType, stepPin, dirPin);
 
+// SPI interrupt routine
+ISR (SPI_STC_vect) {
+  byte c = SPDR;  // grab byte from SPI Data Register
+  
+  // add to buffer if room
+  if (pos < (sizeof (buf) - 1))
+    buf [pos++] = c; 
+    //Serial.println("recieved something");
+    
+  // example: 255 means time to process buffer
+  if (c == 0xff)
+    process_it = true;
+};  
+
+void array_to_string(byte array[], unsigned int len, char buffer[]) {
+    for (unsigned int i = 0; i < len; i++) {
+        byte nib1 = (array[i] >> 4) & 0x0F;
+        byte nib2 = (array[i] >> 0) & 0x0F;
+        buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA;
+        buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
+    }
+    buffer[len*2] = '\0';
+}
+
+void setMotorPosition(int position) {
+  int data = map(position, 0, 10, 0, 50);
+  Serial.println(data);
+  myStepper.runToNewPosition(data);
+}
+
 void setup (void) {
   Serial.begin (115200);   // debugging
 
@@ -39,45 +69,15 @@ void setup (void) {
 
 };
 
-// SPI interrupt routine
-ISR (SPI_STC_vect) {
-  byte c = SPDR;  // grab byte from SPI Data Register
-  
-  // add to buffer if room
-  if (pos < (sizeof (buf) - 1))
-    buf [pos++] = c; 
-    //Serial.println("recieved something");
-    
-  // example: newline means time to process buffer
-  if (c == 0xff)
-    process_it = true;
-};  
-
-void array_to_string(byte array[], unsigned int len, char buffer[]) {
-    for (unsigned int i = 0; i < len; i++) {
-        byte nib1 = (array[i] >> 4) & 0x0F;
-        byte nib2 = (array[i] >> 0) & 0x0F;
-        buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA;
-        buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
-    }
-    buffer[len*2] = '\0';
-}
-
-void setMotorPosition(int position) {
-  int data = map(position, 0, 10, 0, 50);
-  Serial.println(data);
-  myStepper.runToNewPosition(data);
-}
-
-
 // main loop - wait for flag set in interrupt routine
 void loop (void) {
 
   if (process_it) {
     buf [pos] = 0; 
 
+    if (buf[0] == 0) {
     setMotorPosition(buf[1]);  
-    Serial.println(buf[0]);
+    }
 
     //take buf and set to string
     char str[32] = "";
