@@ -1,31 +1,34 @@
-#include<Arduino.h>
+#include <Arduino.h>
 #include <SPI.h>
 #include <AccelStepper.h>
+
+//#define motorInterfaceType 1
 
 byte buf [100];
 volatile byte pos;
 volatile boolean process_it;
 
+
 class motor {
   public:
+  void setMotor(byte motorNumber, byte stepPin, byte dirPin);
+  byte _motorNumber;
   byte _dirPin;
   byte _stepPin;
-
-  void setMotor(byte stepPin, byte dirPin);
-  void createMotorInstance();
   
   private:
     /* data */
 };
 
-void motor::setMotor (byte stepPin, byte dirPin) {
+void motor::setMotor (byte motorNumber, byte stepPin, byte dirPin) {
   _dirPin = dirPin;
   _stepPin = stepPin;
+  //String Steppername = motorNumber;
+  AccelStepper stepper + motorNumber(1, stepPin, dirPin);
+  return;
 }
 
-motor motor1;
-
-
+motor motor0;
 
 
 // Define pin connections
@@ -86,12 +89,16 @@ void setup (void) {
   myStepper.setAcceleration(8000);
   myStepper.setSpeed(100);
 
-    // set motor position to 0
+  // set motor position to 0
   myStepper.setCurrentPosition(0);
+
+//TEST VOOR MOTOR CLASS
+  motor0.setMotor(0, 2, 3);
+
 
 };
 
-// main loop - wait for flag set in interrupt routine
+
 void loop (void) {
 
   if (process_it) {
