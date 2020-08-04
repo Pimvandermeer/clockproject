@@ -19,12 +19,12 @@
   "homepage": "https://github.com/Pimvandermeer/clockproject#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "node-sass": "^4.13.1",
-    "ws": "^7.2.3"
+    "node-sass": "^4.14.1",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2",
-    "sass": "^1.26.3"
+    "nodemon": "^2.0.4",
+    "sass": "^1.26.10"
   },
   "comment": {
     "dependecies for raspberry!!!": "",

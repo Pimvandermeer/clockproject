@@ -23,8 +23,8 @@ class motor {
 void motor::setMotor (byte motorNumber, byte stepPin, byte dirPin) {
   _dirPin = dirPin;
   _stepPin = stepPin;
-  //String Steppername = motorNumber;
-  AccelStepper stepper + motorNumber(1, stepPin, dirPin);
+  String Steppername = "stepper" + motorNumber;
+  AccelStepper S(1, stepPin, dirPin);
   return;
 }
 

@@ -1,0 +1,31 @@
+.btn {
+    border: 2px solid rgba($color-primary-grey,0.2);
+    border-radius: 61px;
+    font-size: 12px;
+    background-color: rgba($color-primary-orange,.8);
+    color: $color-secondary-black;
+    letter-spacing: 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    display: inline-block;
+    margin-right: .75em;
+
+    &__clicked {
+      background-color: rgba($color-secondary-orange, 1);
+    }
+
+    &:hover {
+      color: $color-primary-white;
+      box-shadow: 0 0.5rem 1rem rgba($color-primary-black,.2);
+      cursor: pointer;
+    }
+
+    &:active {
+      border: 2px solid $color-primary-grey;
+      background-color: rgba($color-primary-orange,.8);
+      color: $color-primary-white;
+      transform: translateY(3px);
+      box-shadow: 0 1rem 2rem rgba($color-primary-black,.2);
+    }
+}
