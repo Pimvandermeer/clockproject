@@ -16,6 +16,15 @@ function websocketSend(element) {
     ws.send(item);
 };
 
+const griditem1 = document.querySelector(".griditem ");
+
+//Number creation
+function setNumber1() {
+    griditem1.classList.add(".btn__clicked")
+};
+
+
+
 
 //Button Handeler
 const btn__vertical = document.querySelector(".btn__vertical");
