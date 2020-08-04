@@ -17,6 +17,56 @@ function websocketSend(element) {
 };
 
 
+//Button Handeler
+const btn__vertical = document.querySelector(".btn__vertical");
+const btn__diagonal = document.querySelector(".btn__diagonal");
+const btn__horizontal = document.querySelector(".btn__horizontal");
+
+let verGrid;
+function verticalGrid () { 
+    verGrid = setInterval(loopVerticalGrid, 4000);
+};
+
+btn__vertical.addEventListener("click", function() {
+    if (btn__vertical.classList.contains("btn__clicked")) {
+        clearInterval(verGrid);
+        btn__vertical.classList.remove("btn__clicked");
+    } else {
+    btn__vertical.classList.add("btn__clicked");
+    verticalGrid();
+    };
+});
+
+let diaGrid;
+function diagonalGrid () {
+    diaGrid = setInterval(loopDiagonalGrid, 4000);
+};
+
+btn__diagonal.addEventListener("click", function() {
+    if (btn__diagonal.classList.contains("btn__clicked")) {
+        clearInterval(diaGrid);
+        btn__diagonal.classList.remove("btn__clicked");
+    } else {
+    btn__diagonal.classList.add("btn__clicked");
+    diagonalGrid();
+    };
+});
+
+let horGrid;
+function horizontalGrid() {
+    horGrid = setInterval(loopHorizontalGrid, 400);
+};
+btn__horizontal.addEventListener("click", function() {
+    if (btn__horizontal.classList.contains("btn__clicked")) {
+        clearInterval(horGrid);
+        btn__horizontal.classList.remove("btn__clicked");
+    } else {
+    btn__horizontal.classList.add("btn__clicked");
+    horizontalGrid();
+    };
+});
+
+
 //Handle Click events
 let interval;
 
@@ -109,10 +159,6 @@ function randomShuffleAnimationGrid (times) {
     };
 };
 
-//setInterval(randomShuffleAnimationGrid, 1500);
-
-//randomShuffleAnimationGrid();
-
 function loopVerticalGrid() {
     for (let k=0; k<=overlay.rows; k++) {
         let i = k;
@@ -156,9 +202,3 @@ function loopDiagonalGrid() {
         };
     };
 };
-
-
-
-//setInterval(loopDiagonalGrid, 3000);
-//setInterval(loopVerticalGrid, 2000);
-//setInterval(loopHorizontalGrid, 2000);
